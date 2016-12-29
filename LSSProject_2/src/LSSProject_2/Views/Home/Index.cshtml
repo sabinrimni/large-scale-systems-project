@@ -1,0 +1,59 @@
+﻿@model LSSProject_2.Models.APIModel
+@{
+    ViewData["Title"] = "App";
+}
+
+<div class="row">
+    <section id="inputForm">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new {@class = "form-horizontal", role = "form", id="frmData"}))
+        {
+            <div class="">
+                <h4 class="h4">WELCOME</h4>
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.email, new {@class = "form-control", @placeholder = "Email"})
+                        @Html.ValidationMessageFor(m => m.email, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.range, new {@class = "form-control", @placeholder = "Range"})
+                        @Html.ValidationMessageFor(m => m.range, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(m => m.latitude, new { id = "hdnLatitude" })
+            @Html.HiddenFor(m => m.longitude, new { id =  "hdnLongitude" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Get Parking" class="btn btn-default" id="btnSend"/>
+                </div>
+            </div>
+        }
+    </section>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $('document').ready(function() {
+            $('#btnSend').on('click',
+                function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(assignPosition);
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                });
+
+            function assignPosition(position) {
+                var $form = $('#frmData');
+                $('#hdnLatitude').val(position.coords.latitude);
+                $('#hdnLongitude').val(position.coords.longitude);
+                $form.get(0).submit();
+            }
+        });
+    </script>
+}
