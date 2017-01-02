@@ -17,18 +17,18 @@ namespace LSSProject_2.Controllers
                 parkingList = JsonConvert.DeserializeObject<List<Parking>>(json);
             }
         }
-        public string GetParkingAddress(double latitude, double longitude)
+        public string GetParkingAddress(double latitude, double longitude, int range)
         {
-            var p = getClosestParking(latitude, longitude);
+            var p = getClosestParking(latitude, longitude, range);
             if (p != null)
                 return p.name;
             return "";
         }
 
-        private Parking getClosestParking(double latitude, double longitude)
+        private Parking getClosestParking(double latitude, double longitude, int range)
         {
             var result = new Parking();
-            var min = 1500.0;
+            var min = (double) range * 1000;
             foreach (var p in parkingList)
             {
                 var current = getDistance(latitude, longitude, p.latitude, p.longitude);

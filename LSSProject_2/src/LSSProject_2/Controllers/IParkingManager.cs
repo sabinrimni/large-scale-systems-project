@@ -3,9 +3,9 @@
     public interface IParkingManager
     {
         /// <summary>
-        /// Gets the parking address based on a location
+        /// Gets the parking address based on a location and range
         /// </summary>
         /// <returns>address of nearest parking as string</returns>
-        string GetParkingAddress(double latitude, double longitude);
+        string GetParkingAddress(double latitude, double longitude, int range);
     }
 }

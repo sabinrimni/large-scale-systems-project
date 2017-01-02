@@ -20,7 +20,7 @@ namespace LSSProject_2.Controllers
             EmailManager em = new EmailManager();
             try
             {
-                em.sendEmail(model.email, "Parking Info", "llsproject@ucn.dk", "Wellcome", am.GetAdLink(), pm.GetParkingAddress(model.latitude,model.longitude));
+                em.sendEmail(model.email, "Parking Info", "llsproject@ucn.dk", "Wellcome", am.GetAdLink(), pm.GetParkingAddress(model.latitude,model.longitude, model.range));
             }
             catch (Exception e)
             {
